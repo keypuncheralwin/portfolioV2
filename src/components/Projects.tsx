@@ -60,16 +60,20 @@ export default function Projects() {
     },
     "Portfolio Site": {
       title: "Personal Portfolio",
-      description: "A responsive portfolio website built with Next.js",
-      technologies: ["Next.js", "React", "TypeScript", "CSS"],
+      description: "A responsive portfolio website built with Next.js, featuring an admin dashboard for visitor analytics and interactive project previews",
+      technologies: ["Next.js", "React", "TypeScript", "CSS", "Supabase", "Formspree"],
       features: [
         "Dark/light mode toggle with system preference detection",
-        "Responsive design for all devices with clean animations",
-        "Modular component architecture for maintainability",
-        "Optimised performance with Next.js static generation"
+        "Custom Visitor tracking with admin dashboard using Supabase",
+        "Interactive project preview modal for images and videos",
+        "Contact form integration with Formspree",
+        "Custom skeleton loaders with animated states",
+        "Responsive design with optimized performance"
       ],
       githubUrl: "https://github.com/keypuncheralwin/portfolioV2",
       icon: "🌐", 
+      mediaType: "image",
+      mediaSrc: "/images/portfolio-screenshot.png"
     },
   };
   

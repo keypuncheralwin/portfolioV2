@@ -84,6 +84,9 @@ export default function AdminDashboard() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1>Website Visitor Analytics</h1>
+        <button onClick={fetchVisitors} className={styles.refreshButton} aria-label="Refresh data">
+          Refresh
+        </button>
       </div>
       
       {loading ? (

@@ -14,6 +14,12 @@ A modern, responsive personal portfolio website built with Next.js and React. Th
 - **Resume Download**: Direct download option for resume/CV
 - **Smooth Scrolling**: Enhanced navigation experience
 - **Loading States**: Custom skeleton loader components with animations
+- **Visitor Analytics**: Admin dashboard with custom detailed visitor tracking:
+  - Location tracking (city/country)
+  - Platform detection (Windows/Mac/Linux)
+  - Device type analysis (mobile/desktop)
+  - Referrer source tracking
+  - Password-protected admin interface
 
 ## Technology Stack
 
