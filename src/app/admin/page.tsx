@@ -35,7 +35,7 @@ export default function AdminDashboard() {
 
   const authenticate = (e: React.FormEvent) => {
     e.preventDefault();
-    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+    const adminPassword = process.env.ADMIN_PASSWORD;
     
     if (password === adminPassword) {
       setIsAuthenticated(true);
