@@ -7,7 +7,7 @@ interface VisitorData {
   platform?: string;
   device?: string;
   referrer?: string;
-  userAgent?: string;
+  user_agent?: string; // Changed from userAgent to match DB column name
   timestamp: string;
 }
 
@@ -46,7 +46,7 @@ export const trackVisitor = async () => {
       platform,
       device,
       referrer,
-      userAgent,
+      user_agent: userAgent,
       timestamp: new Date().toISOString(),
     };
     
