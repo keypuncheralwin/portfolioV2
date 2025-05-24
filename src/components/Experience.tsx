@@ -1,6 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
+import TabbedSection from './TabbedSection';
+import Modal from './Modal';
+import SkeletonLoader from './SkeletonLoader';
 
 interface ExperienceData {
   company: string;
@@ -8,193 +11,232 @@ interface ExperienceData {
   period: string;
   location: string;
   responsibilities: string[];
+  clickableTerms?: Record<string, {
+    term: string;
+    mediaType: 'image' | 'youtube' | 'gdrive';
+    mediaSrc: string;
+    altText?: string;
+    modalTitle?: string;
+  }>;
 }
 
 export default function Experience() {
-  const [activeCompany, setActiveCompany] = useState<string>("Selfbook");
+  const [activeCompany, setActiveCompany] = useState<string>("FlightCentre");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPreview, setCurrentPreview] = useState<{
+    title: string;
+    mediaType: 'image' | 'youtube' | 'gdrive';
+    mediaSrc: string;
+    altText?: string;
+  } | null>(null);
+  const [isMediaLoading, setIsMediaLoading] = useState(true);
 
   const experienceData: Record<string, ExperienceData> = {
-    "Selfbook": {
-      company: "Selfbook",
-      role: "Software Developer (Remote)",
-      period: "Jun 2021 - Present",
-      location: "Selfbook / US - New York",
+    "FlightCentre": {
+      company: "Flight Centre Travel Group",
+      role: "Mobile Software Engineer",
+      period: "Apr 2024 - Current",
+      location: "Flight Centre Travel Group",
       responsibilities: [
-        "Developing screens and UI components for the web application using React and Tailwind.",
-        "Fixing UI issues and integrating backend APIs with Redux Saga.",
-        "Collaborating with the design team to implement pixel-perfect interfaces.",
-        "Building reusable components and maintaining code quality standards."
-      ]
-    },
-    "Wevoz": {
-      company: "Wevoz",
-      role: "Frontend Engineer",
-      period: "Mar 2020 - May 2021",
-      location: "Wevoz / Canada - Remote",
-      responsibilities: [
-        "Led the development of an interactive dashboard using Vue.js and D3 for data visualization.",
-        "Implemented responsive designs across multiple devices and browsers.",
-        "Optimized application performance, reducing load time by 40%.",
-        "Mentored junior developers and conducted code reviews."
-      ]
-    },
-    "FreeBeings": {
-      company: "FreeBeings",
-      role: "UI/UX Developer",
-      period: "Sep 2019 - Feb 2020",
-      location: "FreeBeings / Australia - Sydney",
-      responsibilities: [
-        "Created prototypes and wireframes for mobile applications using Figma.",
-        "Implemented user interfaces with React Native for cross-platform compatibility.",
-        "Conducted user testing sessions and incorporated feedback into design iterations.",
-        "Collaborated with backend developers to ensure seamless API integration."
-      ]
-    },
-    "TDF": {
-      company: "TDF",
-      role: "Full Stack Developer",
-      period: "Jan 2019 - Aug 2019",
-      location: "TDF / UK - London (Remote)",
-      responsibilities: [
-        "Developed and maintained RESTful APIs using Node.js and Express.",
-        "Built responsive frontends with React and styled-components.",
-        "Implemented authentication and authorization systems using JWT.",
-        "Deployed applications using Docker and AWS services."
-      ]
-    },
-    "Upwork": {
-      company: "Upwork",
-      role: "Freelance Developer",
-      period: "Jun 2018 - Dec 2018",
-      location: "Upwork / Worldwide - Remote",
-      responsibilities: [
-        "Completed over 15 projects for clients across diverse industries.",
-        "Developed e-commerce solutions using Shopify and custom integrations.",
-        "Created custom WordPress themes and plugins for small businesses.",
-        "Maintained high client satisfaction with 100% positive feedback."
-      ]
-    },
-    "Shoppy": {
-      company: "Shoppy",
-      role: "Junior Web Developer",
-      period: "Jan 2018 - May 2018",
-      location: "Shoppy / Singapore - Singapore",
-      responsibilities: [
-        "Assisted in maintaining and updating the company's e-commerce platform.",
-        "Fixed bugs and implemented minor features under senior guidance.",
-        "Participated in daily stand-ups and sprint planning meetings.",
-        "Gained experience with agile development methodologies."
-      ]
-    }
-  };
-
-  // Refs for the sliding highlight animation
-  const tabsRef = useRef<Record<string, HTMLDivElement | null>>({});
-  const highlightRef = useRef<HTMLDivElement | null>(null);
-
-  // Update the highlight position when the active company changes
-  useEffect(() => {
-    const activeTab = tabsRef.current[activeCompany];
-    const highlight = highlightRef.current;
-    
-    if (activeTab && highlight) {
-      // For desktop (vertical tabs)
-      if (window.innerWidth > 768) {
-        highlight.style.transform = `translateY(${activeTab.offsetTop}px)`;
-        highlight.style.height = `${activeTab.offsetHeight}px`;
-        highlight.style.width = '2px';
-        highlight.style.left = '0';
-        highlight.style.top = '0';
-      } 
-      // For mobile (horizontal tabs)
-      else {
-        highlight.style.transform = `translateX(${activeTab.offsetLeft}px)`;
-        highlight.style.width = `${activeTab.offsetWidth}px`;
-        highlight.style.height = '2px';
-        highlight.style.left = '0';
-        highlight.style.top = 'auto';
-        highlight.style.bottom = '0px';
-      }
-    }
-  }, [activeCompany]);
-
-  // Update highlight position on window resize
-  useEffect(() => {
-    const handleResize = () => {
-      const activeTab = tabsRef.current[activeCompany];
-      const highlight = highlightRef.current;
-      
-      if (activeTab && highlight) {
-        if (window.innerWidth > 768) {
-          highlight.style.transform = `translateY(${activeTab.offsetTop}px)`;
-          highlight.style.height = `${activeTab.offsetHeight}px`;
-          highlight.style.width = '2px';
-          highlight.style.left = '0';
-          highlight.style.top = '0';
-        } else {
-          highlight.style.transform = `translateX(${activeTab.offsetLeft}px)`;
-          highlight.style.width = `${activeTab.offsetWidth}px`;
-          highlight.style.height = '2px';
-          highlight.style.left = '0';
-          highlight.style.top = 'auto';
-          highlight.style.bottom = '0px';
+        "Reworked the existing Salesforce push notification implementation to ensure the user is correctly being opted in/out of the correct business units while also identifying unnecessary calls being made to the endpoint and refactoring the code to reduce the number of calls being made which in turn sped up the push notification opt in/opt out process.",
+        "Implemented an on-device logger for production and staging app builds, significantly improving debugging speed and accelerating app deployments. This self-driven initiative enhanced efficiency and streamlined issue resolution.",
+        "Optimised app performance by refactoring key components to eliminate unnecessary API calls and redundant image processing, significantly reducing operations blocking the main thread.",
+        "Collaborated with the team to rebuild the app home screen based on UX team designs, focusing on improving user navigation and engagement.",
+        "Optimised the Trips screen by persisting trips data locally, significantly improving load speed and reducing API calls."
+      ],
+      clickableTerms: {
+        "logger": {
+          term: "on-device logger",
+          mediaType: "image",
+          mediaSrc: "/images/on-device-logger.jpg", 
+          altText: "On-device logger screenshot",
+          modalTitle: "Flight Centre On-Device Logger"
         }
       }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [activeCompany]);
-
-  const handleCompanyClick = (company: string) => {
-    setActiveCompany(company);
+    },
+    "Liftango": {
+      company: "Liftango",
+      role: "Full Stack Developer",
+      period: "Sep 2022 - Mar 2024",
+      location: "Liftango",
+      responsibilities: [
+        "Optimised monthly Twilio costs by analysing SMS triggers, prioritising push notifications as the primary communication method, and reserving SMS for cases where push notifications fail. Additionally, refined SMS content to reduce character usage, further lowering expenses.",
+        "Contributed to refining the front-end, in React Native to meet evolving feature demands and enhance user experience.",
+        "Added to the back-end service, working with Express JS to update and overhaul API endpoints for new functionalities and user needs."
+      ]
+    },
+    "Brightspark": {
+      company: "Brightspark Labs",
+      role: "Full Stack Developer",
+      period: "Jan 2022 - Aug 2022",
+      location: "Brightspark Labs",
+      responsibilities: [
+        "Contributed to the development of an enhanced prototype for the existing node graph visualiser using React Fiber, enabling finer control over every aspect of the 3D graph due to the limited flexibility of the react-force-graph library.",
+        "Enhanced the in-house codebase by contributing to the Angular front end and Java-based Dropwizard backend, resulting in improved application performance.",
+        "Simplified software setup with bash scripts that automated configuration and reduced execution time enhancing efficiency and ease of use, fostering a collaborative work environment."
+      ]
+    },
+    "Ipau": {
+      company: "Ipau",
+      role: "I.T Client Relations Consultant",
+      period: "Jan 2021 - Jan 2022",
+      location: "Ipau",
+      responsibilities: [
+        "Managed IT operations for multiple primary schools, administering servers, networks, and overall IT infrastructure while optimizing workflows through scripting.",
+        "Delivered effective onsite and remote technical support for various IT issues."
+      ]
+    }
   };
 
-  const activeData = experienceData[activeCompany];
+  // Helper function to parse text and make terms clickable
+  const renderTextWithClickableTerms = (text: string, terms?: Record<string, {
+    term: string;
+    mediaType: 'image' | 'youtube' | 'gdrive';
+    mediaSrc: string;
+    altText?: string;
+    modalTitle?: string;
+  }>) => {
+    if (!terms) return text;
+    
+    // Create parts array by finding and splitting on each term
+    let result = text;
+    
+    Object.entries(terms).forEach(([key, { term }]) => {
+      const parts = result.split(term);
+      if (parts.length > 1) {
+        result = parts.join(
+          `<span class="clickable-term" data-term="${key}">${term}</span>`
+        );
+      }
+    });
+    
+    return (
+      <span 
+        dangerouslySetInnerHTML={{ __html: result }} 
+        onClick={(e) => {
+          const target = e.target as HTMLElement;
+          if (target.classList.contains('clickable-term')) {
+            const termKey = target.getAttribute('data-term');
+            if (termKey && terms[termKey]) {
+              const { term, mediaType, mediaSrc, altText, modalTitle } = terms[termKey];
+              setCurrentPreview({
+                title: modalTitle || term,
+                mediaType,
+                mediaSrc,
+                altText
+              });
+              setIsMediaLoading(true);
+              setIsModalOpen(true);
+            }
+          }
+        }}
+      />
+    );
+  };
 
   return (
     <section className="experience" id="experience">
-      <h2 className="sectionTitle">Where I've Worked</h2>
-      
-      <div className="experienceContainer">
-        <div className="experienceCompaniesScroll">
-          <div className="experienceCompanies">
-            {/* Animated highlight that slides to active tab */}
-            <div 
-              ref={highlightRef} 
-              className="tabHighlight"
-            />
-            
-            {Object.keys(experienceData).map((company) => (
-              <div 
-                key={company}
-                ref={(el: HTMLDivElement | null) => { tabsRef.current[company] = el; }}
-                className={`companyTab ${activeCompany === company ? 'active' : ''}`}
-                onClick={() => handleCompanyClick(company)}
-              >
-                {company}
+      <h2 className="sectionTitle">Experience</h2>
+      <TabbedSection
+        tabs={Object.keys(experienceData)}
+        activeTab={activeCompany}
+        setActiveTab={setActiveCompany}
+        renderContent={(company) => {
+          const data = experienceData[company];
+          return (
+            <>
+              <div className="roleHeader">
+                <h3 className="roleTitle">{data.role}</h3>
+                <p className="rolePeriod">{data.period}</p>
               </div>
-            ))}
-          </div>
-        </div>
-        
-        <div className="experienceDetails">
-          <div className="roleHeader">
-            <h3 className="roleTitle">{activeData.role}</h3>
-            <p className="rolePeriod">{activeData.period}</p>
-          </div>
+              <p className="companyInfo">{data.location}</p>
+              <ul className="responsibilities">
+                {data.responsibilities.map((responsibility, index) => (
+                  <li key={index}>
+                    <span className="bulletPoint">›</span> {
+                      data.clickableTerms 
+                        ? renderTextWithClickableTerms(responsibility, data.clickableTerms)
+                        : responsibility
+                    }
+                  </li>
+                ))}
+              </ul>
+            </>
+          );
+        }}
+        className=""
+        tabClassName=""
+        highlightClassName="tabHighlight"
+        id="experience-tabs"
+      />
+      
+      {/* Preview Modal */}
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={() => {
+          setIsModalOpen(false);
+          // Reset loading state when modal closes
+          setTimeout(() => setIsMediaLoading(true), 300);
+        }}
+        title={currentPreview?.title}
+      >
+
+        <div className="mediaContainer">
+          {/* Skeleton loader */}
+          {isMediaLoading && currentPreview?.mediaType && (
+            <SkeletonLoader 
+              type={currentPreview.mediaType === 'image' ? 'image' : 'video'} 
+            />
+          )}
           
-          <p className="companyInfo">{activeData.location}</p>
-          
-          <ul className="responsibilities">
-            {activeData.responsibilities.map((responsibility, index) => (
-              <li key={index}>
-                <span className="bulletPoint">›</span> {responsibility}
-              </li>
-            ))}
-          </ul>
+          {/* Image rendering */}
+          {currentPreview?.mediaType === 'image' && currentPreview?.mediaSrc && (
+            <div className="image-container" style={{ 
+              position: 'relative',
+              maxWidth: '600px',
+              margin: '0 auto'
+            }}>
+              <img 
+                src={currentPreview.mediaSrc} 
+                alt={currentPreview.altText || currentPreview.title} 
+                loading="eager"
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '650px',
+                  display: isMediaLoading ? 'none' : 'block',
+                  objectFit: 'contain'
+                }}
+                onLoad={() => setIsMediaLoading(false)}
+                onError={() => setIsMediaLoading(false)}
+              />
+            </div>
+          )}
+          {currentPreview?.mediaType === 'youtube' && currentPreview?.mediaSrc && (
+            <iframe 
+              src={`https://www.youtube.com/embed/${currentPreview.mediaSrc}`} 
+              title={currentPreview.title}
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+              className="videoFrame"
+              style={{ display: isMediaLoading ? 'none' : 'block' }}
+              onLoad={() => setIsMediaLoading(false)}
+            ></iframe>
+          )}
+          {currentPreview?.mediaType === 'gdrive' && currentPreview?.mediaSrc && (
+            <iframe 
+              src={`https://drive.google.com/file/d/${currentPreview.mediaSrc}/preview`} 
+              title={currentPreview.title}
+              frameBorder="0"
+              allow="autoplay" 
+              allowFullScreen
+              className="videoFrame"
+              style={{ display: isMediaLoading ? 'none' : 'block' }}
+              onLoad={() => setIsMediaLoading(false)}
+            ></iframe>
+          )}
         </div>
-      </div>
+      </Modal>
     </section>
   );
 }
