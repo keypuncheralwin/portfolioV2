@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface HeaderProps {
   theme: "light" | "dark";
@@ -10,6 +10,8 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');  // Track active section
+  const isProgrammaticScrolling = useRef(false); // Track if scroll is from navigation click
+  const scrollLockTimeout = useRef<NodeJS.Timeout | null>(null); // Timeout reference
   
   // Handle scroll event to add shadow when page is scrolled
   useEffect(() => {
@@ -36,13 +38,34 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
     setMobileMenuOpen(false);
     if (elementId) {
       setActiveSection(elementId);
+      
+      // Set programmatic scrolling flag to true
+      isProgrammaticScrolling.current = true;
+      
+      // Clear any existing timeout
+      if (scrollLockTimeout.current) {
+        clearTimeout(scrollLockTimeout.current);
+      }
+      
+      // Scroll to the element
       document.getElementById(elementId)?.scrollIntoView({ behavior: 'smooth' });
+      
+      // Set a timeout to reset the programmatic scrolling flag
+      // This timeout should be long enough to allow the smooth scroll to complete
+      scrollLockTimeout.current = setTimeout(() => {
+        isProgrammaticScrolling.current = false;
+      }, 1000); // 1 second should be enough for most smooth scrolls
     }
   };
   
   // Set active section based on scroll position
   useEffect(() => {
     const handleScroll = () => {
+      // Skip scroll detection during programmatic scrolling
+      if (isProgrammaticScrolling.current) {
+        return;
+      }
+      
       const sections = ['experience', 'projects', 'contact'];
       
       // Check which section is in view
@@ -63,7 +86,13 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
     };
     
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      // Clear the timeout on unmount to prevent memory leaks
+      if (scrollLockTimeout.current) {
+        clearTimeout(scrollLockTimeout.current);
+      }
+    };
   }, []);  
   
   // Toggle body scroll when mobile menu is open/closed

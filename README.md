@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Portfolio Website
+
+A modern, responsive personal portfolio website built with Next.js and React. This portfolio showcases projects, work experience, and provides a contact form for visitors to get in touch.
+## Features
+
+- **Responsive Design**: Fully optimized for all device sizes
+- **Dark/Light Mode**: Theme toggle with user preference detection
+- **Project Showcase**: Modal system for previewing projects with:
+  - Image previews
+  - YouTube video embeds
+  - Google Drive video embeds
+- **Interactive Tabbed Sections**: Reusable component used in both Experience and Projects sections
+- **Contact Form**: Integrated with Formspree for easy form submission handling
+- **Resume Download**: Direct download option for resume/CV
+- **Smooth Scrolling**: Enhanced navigation experience
+- **Loading States**: Custom skeleton loader components with animations
+
+## Technology Stack
+
+- **Framework**: Next.js (React)
+- **Styling**: CSS Modules
+- **Form Handling**: Formspree
+- **Animations**: CSS Keyframes
+- **Deployment**: Vercel 
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js (v14+ recommended)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+   ```bash
+   git clone https://github.com/yourusername/portfolio.git
+   cd portfolio
+   ```
+
+2. Install dependencies
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Start the development server
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result
+
+## Project Structure
+
+```
+/src
+  /components     # React components
+  /styles         # CSS modules and global styles
+  /public         # Static assets
+  /pages          # Next.js pages
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Customization
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Update the personal information in appropriate components
+2. Replace project images and details in the Projects component
+3. Modify the experience details in the Experience component
+4. Update the contact form endpoint in the Contact component (Formspree)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
+This portfolio is optimized for deployment on Vercel:
 
-To learn more about Next.js, take a look at the following resources:
+1. Push your code to a GitHub repository
+2. Import the project to Vercel
+3. Deploy with default settings
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Alternatively, you can deploy to any static site host:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+npm run export
+```
 
-## Deploy on Vercel
+Then deploy the generated `out` directory.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
