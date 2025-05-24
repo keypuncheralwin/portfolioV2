@@ -1,5 +1,7 @@
 import * as React from "react";
-const ClarifyIcon = (props) => (
+import { SVGProps } from "react";
+
+const ClarifyIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width={256}
     height={256}

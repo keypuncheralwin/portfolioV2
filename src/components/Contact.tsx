@@ -30,7 +30,7 @@ export default function Contact() {
       } else {
         setError('Something went wrong. Please try again.');
       }
-    } catch (error) {
+    } catch {
       setError('Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -44,7 +44,7 @@ export default function Contact() {
         {submitted ? (
           <div className="formSuccess">
             <h3>Thank you for your message!</h3>
-            <p>I'll get back to you as soon as possible.</p>
+            <p>I&apos;ll get back to you as soon as possible.</p>
             <button 
               className="resetButton" 
               onClick={() => setSubmitted(false)}

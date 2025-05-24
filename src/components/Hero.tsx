@@ -11,11 +11,11 @@ export default function Hero() {
         
         <div className="bioWrapper">
           <p className="bio">
-           Ever since I wrote my first line of code, I've been hooked on the process of turning ideas into working products. There's something addictive about solving problems while watching a project come to life. These days, AI tools make it even faster and more exciting to bring those ideas to life.<br /><br />
+           Ever since I wrote my first line of code, I&apos;ve been hooked on the process of turning ideas into working products. There&apos;s something addictive about solving problems while watching a project come to life. These days, AI tools make it even faster and more exciting to bring those ideas to life.<br /><br />
 I have a degree in Information Technology. After graduating, I enrolled in a software engineering bootcamp to sharpen my skills and dive deeper web technologies.
 
-I'm comfortable shifting between tools and technologies, and I enjoy learning new ones when the job calls for it. Whether I'm writing clean code, collaborating with a team, or debugging something that refuses to work (until it finally does), I'm in my element when I'm building.<br /><br />
-If you're looking for someone who enjoys a challenge, learns fast, and takes pride in creating useful software, let's talk.</p>
+I&apos;m comfortable shifting between tools and technologies, and I enjoy learning new ones when the job calls for it. Whether I&apos;m writing clean code, collaborating with a team, or debugging something that refuses to work (until it finally does), I&apos;m in my element when I&apos;m building.<br /><br />
+If you&apos;re looking for someone who enjoys a challenge, learns fast, and takes pride in creating useful software, let&apos;s talk.</p>
         </div>
         <div className="socialLinks">
           <a href="https://www.linkedin.com/in/alwin-george-7599271a8/" target="_blank" rel="noopener noreferrer" className="socialIconLink">
