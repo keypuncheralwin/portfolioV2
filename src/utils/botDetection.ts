@@ -36,6 +36,13 @@ const botPatterns: BotInfo[] = [
 ];
 
 /**
+ * Type guard to check if the navigator has webdriver property
+ */
+function hasWebDriver(nav: Navigator): nav is Navigator & { webdriver: boolean } {
+  return 'webdriver' in nav;
+}
+
+/**
  * Detects if the current user agent matches any known AI bot pattern
  * @returns {BotInfo|null} Detected bot info or null if no bot detected
  */
@@ -53,18 +60,20 @@ export function detectAIBot(): BotInfo | null {
   }
 
   // Additional detection for headless browsers (potential AI crawlers)
-  if (
-    (navigator as any).webdriver || 
-    !navigator.languages || 
-    navigator.languages.length === 0
-  ) {
-    console.log('Potential AI crawler detected (headless browser)');
-    return { 
-      name: 'Unknown Bot', 
-      pattern: 'headless', 
-      service: 'Unknown', 
-      type: 'Unknown' 
-    };
+  // First check if we're in a browser environment
+  if (typeof navigator !== 'undefined') {
+    const hasWebdriver = hasWebDriver(navigator);
+    const noLanguages = !navigator.languages || navigator.languages.length === 0;
+    
+    if (hasWebdriver && navigator.webdriver || noLanguages) {
+      console.log('Potential AI crawler detected (headless browser)');
+      return { 
+        name: 'Unknown Bot', 
+        pattern: 'headless', 
+        service: 'Unknown', 
+        type: 'Unknown' 
+      };
+    }
   }
 
   return null;
@@ -72,7 +81,7 @@ export function detectAIBot(): BotInfo | null {
 
 /**
  * Log detection results to console and save to Supabase
- * @param {BotInfo|null} detectedBot - Information about detected bot
+ * @param {string} ip - Optional IP address of the visitor
  */
 export async function logBotDetection(ip?: string): Promise<void> {
   try {
