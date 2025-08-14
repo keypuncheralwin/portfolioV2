@@ -11,7 +11,7 @@ interface VisitorData {
   timestamp: string;
 }
 
-export const trackVisitor = async () => {
+export const trackVisitor = async (): Promise<VisitorData | undefined> => {
   try {
     // Get IP and location data from a geolocation API
     const ipResponse = await fetch('https://api.ipify.org?format=json');
@@ -58,7 +58,10 @@ export const trackVisitor = async () => {
     if (error) {
       console.error('Error logging visitor:', error);
     }
+    
+    return visitorData;
   } catch (error) {
     console.error('Error tracking visitor:', error);
+    return undefined;
   }
 };
