@@ -16,7 +16,7 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const [theme, setTheme] = useState<ThemeType>("dark");
+  const [theme, setTheme] = useState<ThemeType>("light");
 
   // Initialize theme based on user preference or system preference
   useEffect(() => {
@@ -25,9 +25,8 @@ export default function Layout({ children }: LayoutProps) {
     if (savedTheme === "light" || savedTheme === "dark") {
       setTheme(savedTheme as ThemeType);
     } else {
-      // Use system preference if no saved preference
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setTheme(prefersDark ? "dark" : "light");
+      // Default to light theme if no saved preference
+      setTheme("light");
     }
   }, []);
 

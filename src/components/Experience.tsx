@@ -10,6 +10,7 @@ interface ExperienceData {
   role: string;
   period: string;
   location: string;
+  description?: string;
   responsibilities: string[];
   clickableTerms?: Record<string, {
     term: string;
@@ -37,12 +38,12 @@ export default function Experience() {
       role: "Mobile Software Engineer",
       period: "Apr 2024 - Current",
       location: "Flight Centre Travel Group",
+      description: "At Flight Centre Travel Group (FCTG), a global leader in leisure and corporate travel retailing, I contribute to the mobile app team as a Mobile Software Engineer. I work on the flagship Flight Centre app, which has over a million downloads serving millions of users worldwide, along with apps for other FCTG brands including the recently launched World360 Rewards loyalty program app that enables earning and redeeming points on flights, hotels, cruises, tours, and more.",
       responsibilities: [
         "Reworked the existing Salesforce push notification implementation to ensure the user is correctly being opted in/out of the correct business units while also identifying unnecessary calls being made to the endpoint and refactoring the code to reduce the number of calls being made which in turn sped up the push notification opt in/opt out process.",
         "Implemented an on-device logger for production and staging app builds, significantly improving debugging speed and accelerating app deployments. This self-driven initiative enhanced efficiency and streamlined issue resolution.",
         "Optimised app performance by refactoring key components to eliminate unnecessary API calls and redundant image processing, significantly reducing operations blocking the main thread.",
-        "Collaborated with the team to rebuild the app home screen based on UX team designs, focusing on improving user navigation and engagement.",
-        "Optimised the Trips screen by persisting trips data locally, significantly improving load speed and reducing API calls."
+        "Collaborated with the team to rebuild the app home screen based on UX team designs, focusing on improving user navigation and engagement."
       ],
       clickableTerms: {
         "logger": {
@@ -59,6 +60,7 @@ export default function Experience() {
       role: "Full Stack Developer",
       period: "Sep 2022 - Mar 2024",
       location: "Liftango",
+      description: "At Liftango, a leading provider of on-demand shared transport technology, I worked as a full-stack developer implementing end-to-end features for their mobile app, web dashboard, and supporting backend systems. The company helps global regions and organizations plan, launch, and scale sustainable mobility solutions using a multi-modal platform for fixed-route shuttles, demand-responsive services, carpool programs, public transport digitization, employee shuttles, and community access initiatives.",
       responsibilities: [
         "Optimised monthly Twilio costs by analysing SMS triggers, prioritising push notifications as the primary communication method, and reserving SMS for cases where push notifications fail. Additionally, refined SMS content to reduce character usage, further lowering expenses.",
         "Contributed to refining the front-end, in React Native to meet evolving feature demands and enhance user experience.",
@@ -70,6 +72,7 @@ export default function Experience() {
       role: "Full Stack Developer",
       period: "Jan 2022 - Aug 2022",
       location: "Brightspark Labs",
+      description: "At brightSPARK Labs, a software development agency specializing in high stakes solutions for government and defence clients, I worked as a full-stack developer. The company delivers mission critical projects, including accredited Defence networks with virtualized infrastructure, SharePoint document management, HP Quality Center testing, continuous integration, and scalable services supporting up to 200 virtual machines.",
       responsibilities: [
         "Contributed to the development of an enhanced prototype for the existing node graph visualiser using React Fiber, enabling finer control over every aspect of the 3D graph due to the limited flexibility of the react-force-graph library.",
         "Enhanced the in-house codebase by contributing to the Angular front end and Java-based Dropwizard backend, resulting in improved application performance.",
@@ -81,6 +84,7 @@ export default function Experience() {
       role: "I.T Client Relations Consultant",
       period: "Jan 2021 - Jan 2022",
       location: "Ipau",
+      description: "At Ipau, an IT services provider with nearly two decades of experience across education, defence, manufacturing, and logistics, I worked as an IT Specialist providing support for multiple primary schools.",
       responsibilities: [
         "Managed IT operations for multiple primary schools, administering servers, networks, and overall IT infrastructure while optimizing workflows through scripting.",
         "Delivered effective onsite and remote technical support for various IT issues."
@@ -150,6 +154,9 @@ export default function Experience() {
                 <p className="rolePeriod">{data.period}</p>
               </div>
               <p className="companyInfo">{data.location}</p>
+              {data.description && (
+                <p className="companyDescription">{data.description}</p>
+              )}
               <ul className="responsibilities">
                 {data.responsibilities.map((responsibility, index) => (
                   <li key={index}>

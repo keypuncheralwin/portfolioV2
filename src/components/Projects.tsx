@@ -12,6 +12,8 @@ interface ProjectData {
   description: string;
   technologies: string[];
   features: string[];
+  promo?: string;
+  websiteUrl?: string;
   githubUrl?: string;
   previewUrl?: string;
   icon?: React.ReactNode; 
@@ -28,16 +30,19 @@ export default function Projects() {
   const projectsData: Record<string, ProjectData> = {
     "Clarify": {
       title: "Clarify",
-      description: "A mobile app to combat online clickbait that allows users to share content directly from their browser or YouTube. It analyzes articles and videos in a bottom sheet without interrupting the browsing experience, helping users make informed decisions",
-      technologies: ["Flutter", "Firebase", "Open AI API", "Express.js", "TypeScript", "Cloud Functions"],
+      description: "A mobile app that helps users evaluate online content quality before investing time. Share URLs from articles, YouTube videos, or Reddit posts to get instant AI-powered analysis with value scores, summaries, and insights all without breaking your flow.",
+      promo: "Out now on iOS and Android",
+      technologies: ["React Native", "Firebase", "Groq AI API", "Express.js", "TypeScript", "Cloud Functions", "Firestore", "RevenueCat", "fastlane"],
       features: [
-        "Content analysis with clarity score (0-10) for articles and YouTube videos",
-        "Headline evaluation comparing content with title/thumbnail accuracy",
-        "Concise summarization of key points from complex content",
-        "User history management for previously analyzed content"
+        "Multi-platform content analysis supporting articles, YouTube videos, and Reddit posts",
+        "AI-powered value scoring (0-100) to assess content quality and worth",
+        "Instant insights and concise summaries with reading/watch time estimates",
+        "Passwordless email authentication with magic codes and user profiles",
+        "Credit-based system with in-app purchases for premium analysis",
+        "Comprehensive scan history with search, filters, and category organization",
+        "Anonymous browsing with seamless account registration and data migration"
       ],
-      previewUrl: "#",
-      githubUrl: "https://github.com/keypuncheralwin/clarify-mono-repo",
+      websiteUrl: "https://www.clarifynow.app/",
       icon: <ClarifyIcon width={40} height={40} />,
       mediaType: "youtube",
       mediaSrc: "BSUSj-LY_VA" 
@@ -58,22 +63,37 @@ export default function Projects() {
       mediaType: "gdrive",
       mediaSrc: "1AWSxFPFKOJkmXG5Hz_k6oDUlVI-rd0kl" 
     },
+    "HTML to PDF Converter": {
+      title: "HTML to PDF Resume Generator",
+      description: "A dynamic HTML to PDF conversion system that transforms a fully-styled web resume into a professional, print-ready PDF document. Built with client-side rendering and advanced PDF generation capabilities",
+      technologies: ["Next.js", "React", "TypeScript", "jspdf-html2canvas", "HTML2Canvas", "CSS"],
+      features: [
+        "Client-side HTML to PDF conversion with pixel-perfect rendering",
+        "Dynamic content cloning and off-screen rendering for accurate PDF output",
+        "Intelligent page break management for multi-page documents",
+        "Custom PDF metadata and properties (title, author, subject)",
+        "High-quality image rendering with configurable DPI and compression",
+        "Firebase Analytics integration to track download events and user engagement",
+        "Responsive CSS that adapts styling for both web display and PDF export",
+        "A4 format optimization with precise margin and dimension control"
+      ],
+      githubUrl: "https://github.com/keypuncheralwin/portfolioV2",
+      icon: "📄"
+    },
     "Portfolio Site": {
       title: "Personal Portfolio",
-      description: "A responsive portfolio website built with Next.js, featuring an admin dashboard for visitor analytics and interactive project previews",
-      technologies: ["Next.js", "React", "TypeScript", "CSS", "Supabase", "Formspree"],
+      description: "A responsive portfolio website built with Next.js, featuring interactive project previews, modern UI design, and integrated analytics",
+      technologies: ["Next.js", "React", "TypeScript", "Firebase Analytics", "CSS"],
       features: [
         "Dark/light mode toggle with system preference detection",
-        "Custom Visitor tracking with admin dashboard using Supabase",
         "Interactive project preview modal for images and videos",
-        "Contact form integration with Formspree",
+        "Firebase Analytics integration for visitor tracking and insights",
+        "Privacy-focused analytics with URL-based opt-out mechanism",
         "Custom skeleton loaders with animated states",
         "Responsive design with optimized performance"
       ],
       githubUrl: "https://github.com/keypuncheralwin/portfolioV2",
-      icon: "🌐", 
-      mediaType: "image",
-      mediaSrc: "/images/portfolio-screenshot.png"
+      icon: "🌐"
     },
   };
   
@@ -83,7 +103,22 @@ export default function Projects() {
       <>
         <div className="projectHeader">
           {project.icon && <span className="projectIcon">{project.icon}</span>}
-          <h3 className="projectTitle">{project.title}</h3>
+          <div className="projectTitleContainer">
+            <h3 className="projectTitle">{project.title}</h3>
+            {project.promo && project.websiteUrl ? (
+              <a 
+                href={project.websiteUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="projectPromo"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {project.promo}
+              </a>
+            ) : project.promo ? (
+              <span className="projectPromo">{project.promo}</span>
+            ) : null}
+          </div>
         </div>
         <p className="projectDescription">{project.description}</p>
         
@@ -102,7 +137,12 @@ export default function Projects() {
         </ul>
         
         <div className="projectLinks">
-          {project.mediaSrc && (
+          {project.websiteUrl && (
+            <a href={project.websiteUrl} target="_blank" rel="noopener noreferrer" className="projectLink websiteLink">
+              Visit Website
+            </a>
+          )}
+          {project.mediaSrc && !project.websiteUrl && (
             <button 
               onClick={() => {
                 setCurrentPreview(project);

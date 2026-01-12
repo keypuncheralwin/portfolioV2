@@ -1,39 +1,48 @@
 # Personal Portfolio Website
 
-A modern, responsive personal portfolio website built with Next.js and React. This portfolio showcases projects, work experience, and provides a contact form for visitors to get in touch.
+A modern, responsive personal portfolio website built with Next.js and React. This portfolio showcases projects, work experience, and includes advanced features like HTML to PDF resume generation and Firebase Analytics integration.
+
 ## Features
 
-- **Responsive Design**: Fully optimized for all device sizes
-- **Dark/Light Mode**: Theme toggle with user preference detection
+- **Responsive Design**: Fully optimized for all device sizes with mobile-first approach
+- **Dark/Light Mode**: Theme toggle with system preference detection and persistent storage
 - **Project Showcase**: Modal system for previewing projects with:
   - Image previews
   - YouTube video embeds
   - Google Drive video embeds
 - **Interactive Tabbed Sections**: Reusable component used in both Experience and Projects sections
-- **Contact Form**: Integrated with Formspree for easy form submission handling
-- **Resume Download**: Direct download option for resume/CV
+- **Contact Modal**: Quick contact modal with:
+  - Email and phone display
+  - One-click copy to clipboard functionality
+  - Mobile-optimized layout
+- **HTML to PDF Resume Generator**: 
+  - Client-side PDF generation from HTML content
+  - Automatic page breaks for multi-page resumes
+  - High-quality A4 format export with custom metadata
+  - Dynamic content cloning for accurate rendering
+- **Firebase Analytics Integration**:
+  - Production-only tracking to keep analytics data clean
+  - Page view tracking across all routes
+  - Resume download event tracking
+  - Privacy-focused with URL-based opt-out (`?notrack` / `?yestrack`)
+  - localStorage persistence for tracking preferences
 - **Smooth Scrolling**: Enhanced navigation experience
 - **Loading States**: Custom skeleton loader components with animations
-- **Visitor Analytics**: Admin dashboard with custom detailed visitor tracking:
-  - Location tracking (city/country)
-  - Platform detection (Windows/Mac/Linux)
-  - Device type analysis (mobile/desktop)
-  - Referrer source tracking
-  - Password-protected admin interface
 
 ## Technology Stack
 
-- **Framework**: Next.js (React)
-- **Styling**: CSS Modules
-- **Form Handling**: Formspree
-- **Animations**: CSS Keyframes
+- **Framework**: Next.js 16 (React 19)
+- **Language**: TypeScript
+- **Styling**: CSS with CSS Variables for theming
+- **PDF Generation**: jspdf-html2canvas, HTML2Canvas
+- **Analytics**: Firebase Analytics
 - **Deployment**: Vercel 
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14+ recommended)
+- Node.js (v22.x recommended)
 - npm or yarn
 
 ### Installation
@@ -64,18 +73,39 @@ A modern, responsive personal portfolio website built with Next.js and React. Th
 
 ```
 /src
+  /app            # Next.js app directory (pages and layouts)
   /components     # React components
-  /styles         # CSS modules and global styles
-  /public         # Static assets
-  /pages          # Next.js pages
+  /contexts       # React context providers (ThemeContext)
+  /lib            # Utility libraries (Firebase config)
+  /styles         # Global CSS styles
+  /svgs           # SVG icon components
+/public           # Static assets
 ```
 
-## Customization
+## Key Components
 
-1. Update the personal information in appropriate components
-2. Replace project images and details in the Projects component
-3. Modify the experience details in the Experience component
-4. Update the contact form endpoint in the Contact component (Formspree)
+- **FirebaseAnalytics**: Handles page view tracking and analytics initialization
+- **ContactModal**: Reusable modal for displaying contact information
+- **Hero**: Landing section with contact modal integration
+- **Projects**: Tabbed project showcase with modal previews
+- **Experience**: Work history with tabbed interface
+- **Resume**: HTML to PDF resume generator page
+
+## Configuration
+
+### Firebase Analytics Setup
+
+1. Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+2. Add your Firebase config to `/src/lib/firebase.ts`
+3. Analytics will only track in production builds
+
+### Customization
+
+1. Update personal information in components (Hero, Resume, etc.)
+2. Replace project details in `/src/components/Projects.tsx`
+3. Modify work experience in `/src/components/Experience.tsx`
+4. Update contact information in `/src/components/ContactModal.tsx`
+5. Customize theme colors in `/src/styles/main.css` (CSS variables)
 
 ## Deployment
 
@@ -84,15 +114,24 @@ This portfolio is optimized for deployment on Vercel:
 1. Push your code to a GitHub repository
 2. Import the project to Vercel
 3. Deploy with default settings
+4. Firebase Analytics will automatically activate in production
 
-Alternatively, you can deploy to any static site host:
+### Build Commands
 
 ```bash
-npm run build
-npm run export
+npm run build    # Build for production
+npm run start    # Start production server
+npm run dev      # Start development server with Turbopack
 ```
 
-Then deploy the generated `out` directory.
+## Privacy & Analytics
+
+The portfolio includes privacy-focused analytics:
+
+- **Disable tracking**: Visit `yoursite.com?notrack` to opt-out
+- **Enable tracking**: Visit `yoursite.com?yestrack` to opt-in
+- Preference is saved in localStorage and persists across sessions
+- Analytics only runs in production (not during development)
 
 ## License
 

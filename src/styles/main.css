@@ -4,13 +4,13 @@
   --background: #ffffff;
   --foreground: #171717;
   --nav-active: #000000;
-  --primary: #6246ea;
-  --primary-gradient-start: #6246ea;
-  --primary-gradient-mid: #5ea2ef;
-  --primary-gradient-end: #e74694;
+  --primary: #599692;
+  --primary-gradient-start: #599692;
+  --primary-gradient-mid: #6aada9;
+  --primary-gradient-end: #7bc4c0;
   --button-bg: #f2f2f2;
   --button-hover: #e5e5e5;
-  --link-color: #0070f3;
+  --link-color: #599692;
   --border: rgba(0, 0, 0, 0.1);
   --dots-color: rgba(0, 0, 0, 0.08);
 }
@@ -18,18 +18,18 @@
 html[data-theme="dark"],
 body[data-theme="dark"] {
   /* Dark mode colors */
-  --background: #000000;
-  --foreground: #ededed;
-  --nav-active: #ffffff;
-  --primary: #9b82ff;
-  --primary-gradient-start: #6246ea;
-  --primary-gradient-mid: #5ea2ef;
-  --primary-gradient-end: #e74694;
-  --button-bg: #1a1a1a;
-  --button-hover: #2a2a2a;
-  --link-color: #9b82ff;
-  --border: rgba(255, 255, 255, 0.1);
-  --dots-color: rgba(255, 255, 255, 0.1);
+  --background: #11172a;
+  --foreground: #dfe5ec;
+  --nav-active: #dfe5ec;
+  --primary: #599692;
+  --primary-gradient-start: #599692;
+  --primary-gradient-mid: #6aada9;
+  --primary-gradient-end: #7bc4c0;
+  --button-bg: #1a2235;
+  --button-hover: #232d42;
+  --link-color: #7bc4c0;
+  --border: rgba(223, 229, 236, 0.1);
+  --dots-color: rgba(223, 229, 236, 0.05);
 }
 
 /* General styles */
@@ -341,14 +341,14 @@ button {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: rgba(98, 70, 234, 0.1);
+  background-color: rgba(89, 150, 146, 0.1);
   color: var(--primary);
   transition: all 0.2s ease;
 }
 
 .socialIconLink:hover {
   transform: translateY(-2px);
-  background-color: rgba(98, 70, 234, 0.15);
+  background-color: rgba(89, 150, 146, 0.2);
 }
 
 .socialIcon {
@@ -482,7 +482,7 @@ button {
   color: var(--primary);
   opacity: 1;
   position: relative;
-  background-color: rgba(98, 70, 234, 0.05);
+  background-color: rgba(89, 150, 146, 0.1);
 }
 
 .tabContent {
@@ -510,8 +510,18 @@ button {
 
 .companyInfo {
   color: var(--primary);
-  margin-bottom: 30px;
+  margin-bottom: 16px;
   font-size: 16px;
+}
+
+.companyDescription {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--foreground);
+  opacity: 0.85;
+  font-style: italic;
+  margin-bottom: 20px;
+  text-align: justify;
 }
 
 .responsibilities {
@@ -826,6 +836,11 @@ button {
     font-size: 14px;
     margin-bottom: 12px;
   }
+
+  .companyDescription {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
   
   .responsibilities li {
     margin-bottom: 10px;
@@ -839,6 +854,15 @@ button {
   /* Project mobile styles */
   .projectHeader {
     margin-bottom: 6px;
+  }
+
+  .projectTitleContainer {
+    gap: 8px;
+  }
+
+  .projectPromo {
+    font-size: 10px;
+    padding: 3px 10px;
   }
   
   .projectTitle {
@@ -1065,11 +1089,52 @@ button {
   align-items: center;
 }
 
+.projectTitleContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .projectTitle {
   font-size: 22px;
   font-weight: 600;
   margin: 0;
   color: var(--foreground);
+}
+
+.projectPromo {
+  display: inline-block;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-gradient-mid));
+  color: white;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(89, 150, 146, 0.3);
+  animation: subtle-pulse 2s ease-in-out infinite;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.projectPromo:hover {
+  background: linear-gradient(135deg, var(--primary-gradient-mid), var(--primary-gradient-end));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(89, 150, 146, 0.4);
+}
+
+@keyframes subtle-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 4px rgba(89, 150, 146, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 3px 6px rgba(89, 150, 146, 0.4);
+  }
 }
 
 .projectPeriod {
@@ -1102,7 +1167,7 @@ button {
   font-size: 13px;
   padding: 4px 12px;
   border-radius: 4px;
-  background-color: rgba(98, 70, 234, 0.1);
+  background-color: rgba(89, 150, 146, 0.15);
   color: var(--primary);
   font-weight: 500;
   display: inline-block;
@@ -1142,6 +1207,19 @@ button {
   cursor: pointer;
   background: none;
   text-decoration: none;
+}
+
+.websiteLink {
+  background: linear-gradient(135deg, var(--primary), var(--primary-gradient-mid));
+  color: white;
+  border: none;
+  font-weight: 600;
+}
+
+.websiteLink:hover {
+  background: linear-gradient(135deg, var(--primary-gradient-mid), var(--primary-gradient-end));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(89, 150, 146, 0.3);
 }
 
 .githubLink {
@@ -1190,6 +1268,24 @@ button {
   transition: border-color 0.2s ease;
 }
 
+.resume-skill {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: #f5f5f5;
+  color: #1a1a1a;
+  border: 1px solid #d0d0d0;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.resume-skill:hover {
+  background-color: #599692;
+  color: white;
+  border-color: #599692;
+}
+
 .formInput:focus {
   outline: none;
   border-color: var(--primary);
@@ -1219,7 +1315,7 @@ button {
   text-align: center;
   padding: 40px 20px;
   border-radius: 8px;
-  background-color: rgba(98, 70, 234, 0.05);
+  background-color: rgba(89, 150, 146, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1245,7 +1341,7 @@ button {
 }
 
 .resetButton:hover {
-  background-color: rgba(98, 70, 234, 0.05);
+  background-color: rgba(89, 150, 146, 0.1);
 }
 
 .formError {
@@ -1254,7 +1350,78 @@ button {
   margin-top: -8px;
 }
 
+/* Contact Modal Styles */
+.contactModalContent {
+  max-width: 500px;
+}
 
+.contactModalBody {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contactOption {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contactLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contactValue {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: var(--button-bg);
+  border-radius: 6px;
+  font-size: 16px;
+  border: 1px solid var(--border);
+}
+
+.contactValue a {
+  color: var(--foreground);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contactValue a:hover {
+  color: var(--primary);
+}
+
+.copyButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.copyButton:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.copyButton svg {
+  flex-shrink: 0;
+}
 
 .contactForm, .formSuccess {
   width: 100%;
@@ -1273,6 +1440,37 @@ button {
   .submitButton {
     width: 100%;
     max-width: 100%;
+  }
+
+  /* Contact Modal Mobile Styles */
+  .contactModalContent {
+    max-width: 90%;
+    margin: 0 20px;
+  }
+
+  .contactModalBody {
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .contactValue {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .contactValue span,
+  .contactValue a {
+    font-size: 14px;
+    word-break: break-all;
+    text-align: left;
+  }
+
+  .copyButton {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 12px;
   }
 }
 
@@ -1325,5 +1523,414 @@ button {
     flex-direction: column;
     align-items: center;
     gap: 15px;
+  }
+}
+
+/* Resume Page Styles */
+.resume-download-container {
+  max-width: 1020px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 60px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.resume-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-gradient-mid));
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(89, 150, 146, 0.25);
+  letter-spacing: 0.3px;
+}
+
+.resume-download-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--primary-gradient-mid), var(--primary-gradient-end));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(89, 150, 146, 0.35);
+}
+
+.resume-download-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.resume-download-btn svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.resume-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 60px;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  line-height: 1.6;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Hide border and adjust for PDF generation */
+.resume-page.pdf-generating {
+  border: none;
+  border-radius: 0;
+  padding: 30px 40px;
+  max-width: 100%;
+}
+
+.resume-page.pdf-generating .resume-header-section {
+  margin-bottom: 20px;
+}
+
+.resume-page.pdf-generating .resume-section {
+  margin-bottom: 20px;
+}
+
+/* Force page break before Education section in PDF */
+.resume-page.pdf-generating .resume-page-break {
+  page-break-before: always;
+  break-before: page;
+  padding-top: 20px;
+}
+
+/* Prevent the section from breaking across pages */
+.resume-page.pdf-generating .resume-page-break {
+  page-break-inside: avoid;
+}
+
+.resume-page.pdf-generating .resume-section-title {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.resume-page.pdf-generating .resume-job {
+  margin-bottom: 16px;
+}
+
+.resume-page.pdf-generating .resume-list li {
+  margin-bottom: 3px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.resume-page.pdf-generating .resume-job-title {
+  font-size: 14px;
+}
+
+.resume-page.pdf-generating .resume-company {
+  font-size: 14px;
+}
+
+.resume-page.pdf-generating .resume-date {
+  font-size: 12px;
+}
+
+.resume-page.pdf-generating .resume-name {
+  font-size: 28px;
+}
+
+.resume-page.pdf-generating .resume-title {
+  font-size: 14px;
+}
+
+.resume-page.pdf-generating .resume-contact-info {
+  font-size: 11px;
+}
+
+.resume-page.pdf-generating .resume-summary {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.resume-page.pdf-generating .resume-skill {
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+.resume-page.pdf-generating .resume-company-description {
+  font-size: 11px;
+  line-height: 1.4;
+  margin: 6px 0 8px 0;
+}
+
+.resume-header-section {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.resume-header-left {
+  flex-shrink: 0;
+  min-width: 280px;
+}
+
+.resume-header-right {
+  flex: 1;
+}
+
+.resume-name {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #1a1a1a;
+}
+
+.resume-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #1a1a1a;
+}
+
+.resume-contact-info {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+
+.resume-contact-info a {
+  color: #1a1a1a;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.resume-contact-info a:hover {
+  color: #599692;
+}
+
+.resume-section {
+  margin-bottom: 35px;
+}
+
+.resume-summary {
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: justify;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.resume-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  color: #599692;
+  position: relative;
+  padding-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.resume-section-title::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background-color: #599692;
+}
+
+.resume-job {
+  margin-bottom: 28px;
+}
+
+.resume-job:last-child {
+  margin-bottom: 0;
+}
+
+.resume-job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+  gap: 12px;
+}
+
+.resume-job-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.resume-company {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  color: #1a1a1a;
+  flex: 1;
+}
+
+.resume-company-description {
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.5;
+  margin: 8px 0 10px 0;
+  color: #4a4a4a;
+}
+
+.resume-date {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  white-space: nowrap;
+  color: #1a1a1a;
+  margin-left: auto;
+}
+
+.resume-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.resume-list li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1a1a1a;
+}
+
+.resume-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #1a1a1a;
+  font-weight: bold;
+}
+
+.resume-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.resume-skill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.resume-skill {
+  font-size: 11px;
+  padding: 4px 10px;
+  background-color: rgba(89, 150, 146, 0.15);
+  color: var(--primary);
+  border-radius: 16px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+/* Print styles for resume */
+@media print {
+  .resume-page {
+    padding: 20px;
+    max-width: 100%;
+  }
+  
+  .header-container,
+  .footer {
+    display: none;
+  }
+  
+  .resume-section {
+    page-break-inside: avoid;
+  }
+  
+  .resume-job {
+    page-break-inside: avoid;
+  }
+}
+
+/* Mobile responsive styles for resume */
+@media (max-width: 768px) {
+  .resume-download-container {
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+
+  .resume-download-btn {
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+
+  .resume-download-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .resume-page {
+    padding: 20px 16px;
+  }
+  
+  .resume-header-section {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .resume-header-left {
+    min-width: auto;
+  }
+  
+  .resume-name {
+    font-size: 28px;
+  }
+  
+  .resume-title {
+    font-size: 14px;
+  }
+  
+  .resume-contact-info {
+    font-size: 11px;
+  }
+  
+  .resume-summary {
+    font-size: 12px;
+  }
+  
+  .resume-section-title {
+    font-size: 20px;
+  }
+  
+  .resume-job-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .resume-job-title {
+    font-size: 16px;
+  }
+  
+  .resume-company {
+    font-size: 14px;
+  }
+  
+  .resume-date {
+    font-size: 13px;
+  }
+  
+  .resume-list li {
+    font-size: 13px;
+  }
+  
+  .resume-skill {
+    font-size: 12px;
+    padding: 4px 10px;
   }
 }

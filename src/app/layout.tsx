@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/main.css";
-import { Tracker } from "../components/Tracker";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import FirebaseAnalytics from "@/components/FirebaseAnalytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,8 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Tracker />
-        {children}
+        <ThemeProvider>
+          <FirebaseAnalytics />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

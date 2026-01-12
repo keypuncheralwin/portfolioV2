@@ -1,5 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 interface HeaderProps {
   theme: "light" | "dark";
@@ -7,11 +9,13 @@ interface HeaderProps {
 }
 
 export default function Header({ theme, toggleTheme }: HeaderProps) {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');  // Track active section
   const isProgrammaticScrolling = useRef(false); // Track if scroll is from navigation click
   const scrollLockTimeout = useRef<NodeJS.Timeout | null>(null); // Timeout reference
+  const isHomePage = pathname === '/';
   
   // Handle scroll event to add shadow when page is scrolled
   useEffect(() => {
@@ -58,6 +62,16 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
     }
   };
   
+  // Set active section from URL hash on mount
+  useEffect(() => {
+    if (isHomePage) {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && ['experience', 'projects'].includes(hash)) {
+        setActiveSection(hash);
+      }
+    }
+  }, [isHomePage]);
+
   // Set active section based on scroll position
   useEffect(() => {
     const handleScroll = () => {
@@ -66,7 +80,7 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
         return;
       }
       
-      const sections = ['experience', 'projects', 'contact'];
+      const sections = ['experience', 'projects'];
       
       // Check which section is in view
       for (const section of sections) {
@@ -110,15 +124,17 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
   return (
     <div className={`header-container ${isScrolled ? 'scrolled' : ''}`}>
       <header className="header">
-        <a 
-          href="#" 
+        <Link 
+          href="/" 
           className="logo" 
           onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            handleNavClick();
+            if (isHomePage) {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              handleNavClick();
+            }
           }}
-        >AG.</a>
+        >AG.</Link>
         
         {/* Mobile menu button */}
         <button 
@@ -134,12 +150,16 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
         
         {/* Desktop and Mobile Navigation */}
         <nav className={`nav ${mobileMenuOpen ? 'mobileNavOpen' : ''}`}>
-          <a 
-            href="#experience" 
+          <Link 
+            href={isHomePage ? "#experience" : "/#experience"}
             className={`navItem ${activeSection === 'experience' ? 'active' : ''}`} 
             onClick={(e) => {
-              e.preventDefault();
-              handleNavClick('experience');
+              if (isHomePage) {
+                e.preventDefault();
+                handleNavClick('experience');
+              } else {
+                setMobileMenuOpen(false);
+              }
             }}
           >
             <svg className="navIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -147,25 +167,30 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
               <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
             </svg>
             Experience
-          </a>
-          <a 
-            href="#projects" 
+          </Link>
+          <Link 
+            href={isHomePage ? "#projects" : "/#projects"}
             className={`navItem ${activeSection === 'projects' ? 'active' : ''}`} 
             onClick={(e) => {
-              e.preventDefault();
-              handleNavClick('projects');
+              if (isHomePage) {
+                e.preventDefault();
+                handleNavClick('projects');
+              } else {
+                setMobileMenuOpen(false);
+              }
             }}
           >
             <svg className="navIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
             </svg>
             Projects
-          </a>
-          <a 
-            href="/Alwin_George_Resume.pdf"
-            download="Alwin_George_Resume.pdf"
-            className="navItem"
-            onClick={() => handleNavClick()}
+          </Link>
+          <Link 
+            href="/resume"
+            className={`navItem ${pathname === '/resume' ? 'active' : ''}`}
+            onClick={() => {
+              setMobileMenuOpen(false);
+            }}
           >
             <svg className="navIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -175,21 +200,7 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
               <polyline points="10 9 9 9 8 9"></polyline>
             </svg>
             Resume
-          </a>
-          <a 
-            href="#contact" 
-            className={`navItem ${activeSection === 'contact' ? 'active' : ''}`} 
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavClick('contact');
-            }}
-          >
-            <svg className="navIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-            Contact
-          </a>
+          </Link>
           <button 
             onClick={toggleTheme} 
             className={`themeToggle ${theme === "dark" ? "dark" : "light"}`}
