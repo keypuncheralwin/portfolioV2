@@ -1816,25 +1816,26 @@ button {
 }
 
 .resume-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: block;
 }
 
 .resume-skill-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: block;
 }
 
 .resume-skill {
-  font-size: 11px;
-  padding: 4px 10px;
-  background-color: rgba(89, 150, 146, 0.15);
-  color: var(--primary);
-  border-radius: 16px;
-  font-weight: 500;
-  display: inline-block;
+  font-size: 14px;
+  color: var(--foreground);
+  font-weight: 400;
+  display: inline;
+}
+
+.resume-skill::after {
+  content: ", ";
+}
+
+.resume-skill:last-child::after {
+  content: "";
 }
 
 /* Print styles for resume */

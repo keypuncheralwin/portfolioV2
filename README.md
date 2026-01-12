@@ -15,11 +15,12 @@ A modern, responsive personal portfolio website built with Next.js and React. Th
   - Email and phone display
   - One-click copy to clipboard functionality
   - Mobile-optimized layout
-- **HTML to PDF Resume Generator**: 
-  - Client-side PDF generation from HTML content
-  - Automatic page breaks for multi-page resumes
-  - High-quality A4 format export with custom metadata
-  - Dynamic content cloning for accurate rendering
+- **ATS-Compliant Resume PDF**: 
+  - Built with `@react-pdf/renderer` for native text generation
+  - Ensures perfect parsing by Applicant Tracking Systems (ATS)
+  - Accessible, vector-based text output
+  - Automatic page breaks and layout management
+  - High-quality A4 format export
 - **Firebase Analytics Integration**:
   - Production-only tracking to keep analytics data clean
   - Page view tracking across all routes
@@ -34,7 +35,7 @@ A modern, responsive personal portfolio website built with Next.js and React. Th
 - **Framework**: Next.js 16 (React 19)
 - **Language**: TypeScript
 - **Styling**: CSS with CSS Variables for theming
-- **PDF Generation**: jspdf-html2canvas, HTML2Canvas
+- **PDF Generation**: @react-pdf/renderer
 - **Analytics**: Firebase Analytics
 - **Deployment**: Vercel 
 

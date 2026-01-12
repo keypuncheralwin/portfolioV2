@@ -16,9 +16,9 @@ interface ProjectData {
   websiteUrl?: string;
   githubUrl?: string;
   previewUrl?: string;
-  icon?: React.ReactNode; 
-  mediaType?: 'image' | 'youtube' | 'gdrive'; 
-  mediaSrc?: string; 
+  icon?: React.ReactNode;
+  mediaType?: 'image' | 'youtube' | 'gdrive';
+  mediaSrc?: string;
 }
 
 export default function Projects() {
@@ -30,7 +30,7 @@ export default function Projects() {
   const projectsData: Record<string, ProjectData> = {
     "Clarify": {
       title: "Clarify",
-      description: "A mobile app that helps users evaluate online content quality before investing time. Share URLs from articles, YouTube videos, or Reddit posts to get instant AI-powered analysis with value scores, summaries, and insights all without breaking your flow.",
+      description: "A mobile app that helps users evaluate online content quality before opening the video or article. Share URLs from articles, YouTube videos, or Reddit posts to get instant AI-powered analysis with value scores, summaries, and insights all without breaking your flow.",
       promo: "Out now on iOS and Android",
       technologies: ["React Native", "Firebase", "Groq AI API", "Express.js", "TypeScript", "Cloud Functions", "Firestore", "RevenueCat", "fastlane"],
       features: [
@@ -45,7 +45,7 @@ export default function Projects() {
       websiteUrl: "https://www.clarifynow.app/",
       icon: <ClarifyIcon width={40} height={40} />,
       mediaType: "youtube",
-      mediaSrc: "BSUSj-LY_VA" 
+      mediaSrc: "BSUSj-LY_VA"
     },
     "Pro Notes": {
       title: "Pro Notes",
@@ -61,19 +61,19 @@ export default function Projects() {
       previewUrl: "#",
       icon: <ProNotesIcon width={40} height={40} />,
       mediaType: "gdrive",
-      mediaSrc: "1AWSxFPFKOJkmXG5Hz_k6oDUlVI-rd0kl" 
+      mediaSrc: "1AWSxFPFKOJkmXG5Hz_k6oDUlVI-rd0kl"
     },
     "HTML to PDF Converter": {
-      title: "HTML to PDF Resume Generator",
-      description: "A dynamic HTML to PDF conversion system that transforms a fully-styled web resume into a professional, print-ready PDF document. Built with client-side rendering and advanced PDF generation capabilities",
-      technologies: ["Next.js", "React", "TypeScript", "jspdf-html2canvas", "HTML2Canvas", "CSS"],
+      title: "ATS-Ready Resume Generator",
+      description: "A specialized PDF generation system built with @react-pdf/renderer that programmatically constructs a resume Document Object Model. This ensures 100% text extractability for ATS systems while maintaining a pixel-perfect, consistent visual design across all devices.",
+      technologies: ["Next.js", "React", "TypeScript", "@react-pdf/renderer", "CSS"],
       features: [
-        "Client-side HTML to PDF conversion with pixel-perfect rendering",
-        "Dynamic content cloning and off-screen rendering for accurate PDF output",
-        "Intelligent page break management for multi-page documents",
-        "Custom PDF metadata and properties (title, author, subject)",
-        "High-quality image rendering with configurable DPI and compression",
-        "Firebase Analytics integration to track download events and user engagement",
+        "Server-less, client-side generation using React components",
+        "Native text rendering for perfect ATS parsing and keyword extraction",
+        "Declarative layout engine ensuring consistent results locally and on Vercel",
+        "Optimized file size and metadata for professional applications",
+        "High-quality vector graphics and accessible text structure",
+        "Firebase Analytics integration to track download events",
         "Responsive CSS that adapts styling for both web display and PDF export",
         "A4 format optimization with precise margin and dimension control"
       ],
@@ -96,7 +96,7 @@ export default function Projects() {
       icon: "🌐"
     },
   };
-  
+
   const renderProject = (projectKey: string) => {
     const project = projectsData[projectKey];
     return (
@@ -106,10 +106,10 @@ export default function Projects() {
           <div className="projectTitleContainer">
             <h3 className="projectTitle">{project.title}</h3>
             {project.promo && project.websiteUrl ? (
-              <a 
-                href={project.websiteUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href={project.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="projectPromo"
                 onClick={(e) => e.stopPropagation()}
               >
@@ -121,13 +121,13 @@ export default function Projects() {
           </div>
         </div>
         <p className="projectDescription">{project.description}</p>
-        
+
         <div className="projectTech">
           {project.technologies.map((tech, index) => (
             <span key={index} className="techTag">{tech}</span>
           ))}
         </div>
-        
+
         <ul className="projectFeatures">
           {project.features.map((feature, index) => (
             <li key={index}>
@@ -135,7 +135,7 @@ export default function Projects() {
             </li>
           ))}
         </ul>
-        
+
         <div className="projectLinks">
           {project.websiteUrl && (
             <a href={project.websiteUrl} target="_blank" rel="noopener noreferrer" className="projectLink websiteLink">
@@ -143,11 +143,11 @@ export default function Projects() {
             </a>
           )}
           {project.mediaSrc && !project.websiteUrl && (
-            <button 
+            <button
               onClick={() => {
                 setCurrentPreview(project);
                 setIsModalOpen(true);
-              }} 
+              }}
               className="projectLink previewLink"
             >
               Preview
@@ -176,10 +176,10 @@ export default function Projects() {
         highlightClassName="tabHighlight"
         id="projects-tabs"
       />
-      
+
       {/* Preview Modal */}
-      <Modal 
-        isOpen={isModalOpen} 
+      <Modal
+        isOpen={isModalOpen}
         onClose={() => {
           setIsModalOpen(false);
           // Reset loading state when modal closes
@@ -189,15 +189,15 @@ export default function Projects() {
       >
         <div className="mediaContainer">
           {isMediaLoading && currentPreview?.mediaType && (
-            <SkeletonLoader 
-              type={currentPreview.mediaType === 'image' ? 'image' : 'video'} 
+            <SkeletonLoader
+              type={currentPreview.mediaType === 'image' ? 'image' : 'video'}
             />
           )}
-          
+
           {currentPreview?.mediaType === 'image' && currentPreview?.mediaSrc && (
-            <img 
-              src={currentPreview.mediaSrc} 
-              alt={currentPreview.title} 
+            <img
+              src={currentPreview.mediaSrc}
+              alt={currentPreview.title}
               loading="lazy"
               style={{ display: isMediaLoading ? 'none' : 'block' }}
               onLoad={() => setIsMediaLoading(false)}
@@ -205,11 +205,11 @@ export default function Projects() {
             />
           )}
           {currentPreview?.mediaType === 'youtube' && currentPreview?.mediaSrc && (
-            <iframe 
-              src={`https://www.youtube.com/embed/${currentPreview.mediaSrc}`} 
+            <iframe
+              src={`https://www.youtube.com/embed/${currentPreview.mediaSrc}`}
               title={currentPreview.title}
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="videoFrame"
               style={{ display: isMediaLoading ? 'none' : 'block' }}
@@ -217,11 +217,11 @@ export default function Projects() {
             ></iframe>
           )}
           {currentPreview?.mediaType === 'gdrive' && currentPreview?.mediaSrc && (
-            <iframe 
-              src={`https://drive.google.com/file/d/${currentPreview.mediaSrc}/preview`} 
+            <iframe
+              src={`https://drive.google.com/file/d/${currentPreview.mediaSrc}/preview`}
               title={currentPreview.title}
               frameBorder="0"
-              allow="autoplay" 
+              allow="autoplay"
               allowFullScreen
               className="videoFrame"
               style={{ display: isMediaLoading ? 'none' : 'block' }}
