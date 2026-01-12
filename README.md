@@ -128,8 +128,8 @@ npm run dev      # Start development server with Turbopack
 
 The portfolio includes privacy-focused analytics:
 
-- **Disable tracking**: Visit `yoursite.com?notrack` to opt-out
-- **Enable tracking**: Visit `yoursite.com?yestrack` to opt-in
+- **Disable tracking**: Visit `https://alwingeorge.dev?notrack` to opt-out
+- **Enable tracking**: Visit `https://alwingeorge.dev?yestrack` to opt-in
 - Preference is saved in localStorage and persists across sessions
 - Analytics only runs in production (not during development)
 
